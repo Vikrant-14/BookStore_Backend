@@ -70,3 +70,4 @@ C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\refint\BookStor
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\BookStore.pdb
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\BookStore.genruntimeconfig.cache
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\ref\BookStore.dll
+C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\bin\Debug\net6.0\BCrypt.Net-Next.dll

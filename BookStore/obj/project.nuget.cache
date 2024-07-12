@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "plyJnhJ6/8PoroluqXTkJDx2F6ASr0tPJyr16emn3Y29SUJ8CawcsztCcQlyeNbTKOlcK2Go6KYZioK/E8/bfw==",
+  "dgSpecHash": "O0amNoP3hOxwZm1u2uVlMiXN8Vc2lXmnpRqm9kZaobBPa/K9iv0mfZTbI56rsVyCZNwfvuLk+BhN/eXodZKfdw==",
   "success": true,
   "projectFilePath": "C:\\Users\\kirti\\Vikrant\\CDAC\\BookStore\\BookStore\\BookStore.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\kirti\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\kirti\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\kirti\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\kirti\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
