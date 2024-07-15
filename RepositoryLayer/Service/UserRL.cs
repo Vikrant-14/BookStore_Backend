@@ -8,6 +8,7 @@ using RepositoryLayer.Interface;
 using RepositoryLayer.Utility;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace RepositoryLayer.Service
     {
         public ApplicationDBContext _context { get; }
         private readonly IConfiguration _configuration;
+        private String encryptPassword;
+        private String decryptPassword;
         public UserRL(ApplicationDBContext context, IConfiguration configuration)
         {
             _context = context;
@@ -32,13 +35,13 @@ namespace RepositoryLayer.Service
 
             if (findUser == null)
             {
-                model.Password = PasswordService.HashPassword(model.Password);
-
+                //model.Password = PasswordService.HashPassword(model.Password);
+                encryptPassword = EncryptionHelper.Encrypt(model.Password);
                 user = new UserEntity()
                 {
                     Name = model.Name,
                     Email = model.Email,
-                    Password = model.Password,
+                    Password = encryptPassword,
                     PhoneNumber = model.PhoneNumber,
                     Role = role
                 };
@@ -63,7 +66,14 @@ namespace RepositoryLayer.Service
                 throw new UserException("Invalid Email/Password");
             }
 
-            if (PasswordService.VerifyPassword(model.Password, result.Password))
+            encryptPassword = EncryptionHelper.Encrypt(result.Password);
+            decryptPassword = EncryptionHelper.Decrypt(encryptPassword);
+
+            //if (PasswordService.VerifyPassword(model.Password, result.Password))
+            //{
+            //    return JwtTokenGenerator.GenerateToken(_context, _configuration, result);
+            //}
+            if (decryptPassword.Equals(result.Password))
             {
                 return JwtTokenGenerator.GenerateToken(_context, _configuration, result);
             }
