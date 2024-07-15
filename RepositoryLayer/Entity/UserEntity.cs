@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -18,5 +19,7 @@ namespace RepositoryLayer.Entity
         public string Password { get; set; } = string.Empty;
         public long PhoneNumber { get; set; }
         public string Role { get; set; } = string.Empty;
+        [JsonIgnore]
+        public ICollection<BookEntity> Books { get; set; }
     }
 }

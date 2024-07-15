@@ -29,6 +29,13 @@ builder.Services.AddScoped<IUserRL, UserRL>();
 builder.Services.AddScoped<IUserBL, UserBL>();
 builder.Services.AddScoped<IUserCommand, UserCommand>();
 builder.Services.AddScoped<IUserQuery, UserQuery>();
+
+//Book
+builder.Services.AddScoped<IBookRL, BookRL>();
+builder.Services.AddScoped<IBookBL, BookBL>();
+builder.Services.AddScoped<IBookCommand, BookCommand>();
+
+//JwtValidation
 builder.Services.AddTransient<JwtValidation>();
 
 builder.Services.AddControllers();

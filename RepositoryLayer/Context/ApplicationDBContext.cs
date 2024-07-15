@@ -13,5 +13,6 @@ namespace RepositoryLayer.Context
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<BookEntity> Books { get; set; }
     }
 }
