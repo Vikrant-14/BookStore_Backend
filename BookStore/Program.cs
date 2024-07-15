@@ -34,6 +34,7 @@ builder.Services.AddScoped<IUserQuery, UserQuery>();
 builder.Services.AddScoped<IBookRL, BookRL>();
 builder.Services.AddScoped<IBookBL, BookBL>();
 builder.Services.AddScoped<IBookCommand, BookCommand>();
+builder.Services.AddScoped<IBookQuery, BookQuery>();
 
 //JwtValidation
 builder.Services.AddTransient<JwtValidation>();

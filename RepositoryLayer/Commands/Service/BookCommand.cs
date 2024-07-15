@@ -36,5 +36,28 @@ namespace RepositoryLayer.Commands.Service
             }
         }
 
+        public async Task<BookEntity> UpdateBookAsync(int bookId, BookML model, int adminId)
+        {
+            try
+            {
+                return await _bookRL.UpdateBookAsync(bookId, model,adminId);
+            }
+            catch(BookException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<BookEntity> DeleteBookAsync(int bookId)
+        {
+            try
+            {
+                return await _bookRL.DeleteBookAsync(bookId);
+            }
+            catch (BookException)
+            {
+                throw;
+            }
+        }
     }
 }
