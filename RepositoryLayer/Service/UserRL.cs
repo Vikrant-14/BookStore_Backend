@@ -1,4 +1,6 @@
-﻿using ModelLayer;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using ModelLayer;
 using RepositoryLayer.Context;
 using RepositoryLayer.CustomException;
 using RepositoryLayer.Entity;
@@ -15,10 +17,11 @@ namespace RepositoryLayer.Service
     public class UserRL : IUserRL
     {
         public ApplicationDBContext _context { get; }
-        
-        public UserRL(ApplicationDBContext context)
+        private readonly IConfiguration _configuration;
+        public UserRL(ApplicationDBContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<UserEntity> RegisterAsync(UserML model, string role) 
@@ -51,5 +54,34 @@ namespace RepositoryLayer.Service
             }
         }
 
+        public async Task<string> LoginAsync(LoginML model)
+        {
+            var result = await _context.Users.Where(u => u.Email == model.Email).FirstOrDefaultAsync();
+
+            if (result == null)
+            {
+                throw new UserException("Invalid Email/Password");
+            }
+
+            if (PasswordService.VerifyPassword(model.Password, result.Password))
+            {
+                return JwtTokenGenerator.GenerateToken(_context, _configuration, result);
+            }
+            else
+            {
+                throw new UserException("Invalid Email/Password");
+            }
+        }
+
+        public async Task<UserEntity> GetUserbyId(int id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                throw new UserException($"User Id : {id} not found");
+            }
+
+            return user;
+        }
     }
 }

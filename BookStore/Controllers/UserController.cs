@@ -1,8 +1,10 @@
 ﻿using BusinessLayer.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer;
 using RepositoryLayer.CustomException;
+using RepositoryLayer.Entity;
 
 namespace BookStore.Controllers
 {
@@ -61,6 +63,51 @@ namespace BookStore.Controllers
                 responseML.Message = ex.Message;
 
                 return StatusCode(400, responseML);
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> LoginAsync(LoginML model)
+        {
+            try
+            {
+                var result = await _userBL.LoginAsync(model);
+
+                responseML.Success = true;
+                responseML.Message = "Login successfully";
+                responseML.Data = result;
+
+                return StatusCode(200, responseML);
+            }
+            catch(UserException ex) 
+            {
+                responseML.Success = false;
+                responseML.Message = ex.Message;
+
+                return StatusCode(400, responseML);
+            }
+        }
+
+        [HttpGet("getUserById/{id}")]
+        [Authorize(Roles ="User, Admin")]
+        public async Task<ActionResult> GetUserbyId(int id)
+        {
+            try
+            {
+                var result = await _userBL.GetUserbyId(id);
+
+                responseML.Success = true;
+                responseML.Message = $"User ID : {id} fetched successfully";
+                responseML.Data = result;
+
+                return StatusCode(200, responseML);
+            }
+            catch (UserException ex)
+            {
+                responseML.Success = false;
+                responseML.Message = ex.Message;
+
+                return StatusCode(404, responseML);
             }
         }
     }

@@ -11,5 +11,7 @@ namespace BusinessLayer.Interface
     public interface IUserBL
     {
         public Task<UserEntity> RegisterUserAsync(UserML model, string role);
+        public Task<string> LoginAsync(LoginML model);
+        public Task<UserEntity> GetUserbyId(int id);
     }
 }

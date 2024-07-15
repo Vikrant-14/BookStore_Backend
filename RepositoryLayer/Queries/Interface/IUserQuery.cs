@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModelLayer;
+using RepositoryLayer.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,8 @@ namespace RepositoryLayer.Queries.Interface
 {
     public interface IUserQuery
     {
+        public Task<string> LoginAsync(LoginML model);
+        public Task<UserEntity> GetUserbyId(int id);
+
     }
 }

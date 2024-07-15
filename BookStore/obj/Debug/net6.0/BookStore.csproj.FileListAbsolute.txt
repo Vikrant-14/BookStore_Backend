@@ -71,3 +71,5 @@ C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\BookStore.pdb
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\BookStore.genruntimeconfig.cache
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\obj\Debug\net6.0\ref\BookStore.dll
 C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\kirti\Vikrant\CDAC\BookStore\BookStore\bin\Debug\net6.0\Newtonsoft.Json.dll
