@@ -21,5 +21,7 @@ namespace RepositoryLayer.Entity
         public string Role { get; set; } = string.Empty;
         [JsonIgnore]
         public ICollection<BookEntity> Books { get; set; }
+        [JsonIgnore]
+        public ICollection<CustomerDetails> customerDetails { get; set; }
     }
 }
