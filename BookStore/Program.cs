@@ -36,6 +36,12 @@ builder.Services.AddScoped<IBookBL, BookBL>();
 builder.Services.AddScoped<IBookCommand, BookCommand>();
 builder.Services.AddScoped<IBookQuery, BookQuery>();
 
+//CustomerDetails
+builder.Services.AddScoped<ICustomerDetailsRL, CustomerDetailsRL>();
+builder.Services.AddScoped<ICustomerDetailsBL, CustomerDetailsBL>();
+builder.Services.AddScoped<ICustomerDetailsCommand, CustomerDetailsCommand>();
+builder.Services.AddScoped<ICustomerDetailsQuery, CustomerDetailsQuery>();
+
 //JwtValidation
 builder.Services.AddTransient<JwtValidation>();
 

@@ -13,6 +13,5 @@ namespace ModelLayer
         public string? FullAddress { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
-        public int UserId { get; set; }
     }
 }

@@ -22,6 +22,6 @@ namespace RepositoryLayer.Entity
         [JsonIgnore]
         public ICollection<BookEntity> Books { get; set; }
         [JsonIgnore]
-        public ICollection<CustomerDetails> customerDetails { get; set; }
+        public ICollection<CustomerDetailsEntity> customerDetails { get; set; }
     }
 }
