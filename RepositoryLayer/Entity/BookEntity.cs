@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace RepositoryLayer.Entity
 {
@@ -25,5 +26,7 @@ namespace RepositoryLayer.Entity
         [Column("Admin_ID")]
         public int UserEntityId { get; set; }
         public UserEntity User { get; set; }
+        [JsonIgnore]
+        public ICollection<CartEntity> Carts { get; set; }
     }
 }

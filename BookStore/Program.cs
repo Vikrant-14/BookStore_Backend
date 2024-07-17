@@ -4,6 +4,7 @@ using BusinessLayer.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RepositoryLayer.Commands.Interface;
 using RepositoryLayer.Commands.Service;
 using RepositoryLayer.Context;
@@ -42,6 +43,12 @@ builder.Services.AddScoped<ICustomerDetailsBL, CustomerDetailsBL>();
 builder.Services.AddScoped<ICustomerDetailsCommand, CustomerDetailsCommand>();
 builder.Services.AddScoped<ICustomerDetailsQuery, CustomerDetailsQuery>();
 
+//Cart
+builder.Services.AddScoped<ICartRL, CartRL>();
+builder.Services.AddScoped<ICartBL, CartBL>();
+builder.Services.AddScoped<ICartCommand, CartCommand>();
+builder.Services.AddScoped<ICartQuery, CartQuery>();
+
 //JwtValidation
 builder.Services.AddTransient<JwtValidation>();
 
@@ -68,7 +75,35 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+//Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookStore API", Version = "v1" });
+
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Enter JWT Bearer token **_only_**",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+
+    c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+        { securityScheme, Array.Empty<string>() }
+        });
+});
 
 var app = builder.Build();
 

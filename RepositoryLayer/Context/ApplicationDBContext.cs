@@ -15,5 +15,21 @@ namespace RepositoryLayer.Context
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<BookEntity> Books { get; set; }
         public DbSet<CustomerDetailsEntity> CustomerDetails { get; set; }
+        public DbSet<CartEntity> Carts { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CartEntity>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Carts)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CartEntity>()
+                .HasOne(c => c.Book)
+                .WithMany(b => b.Carts)
+                .HasForeignKey(c => c.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }

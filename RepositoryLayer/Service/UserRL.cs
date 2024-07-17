@@ -66,14 +66,11 @@ namespace RepositoryLayer.Service
                 throw new UserException("Invalid Email/Password");
             }
 
-            encryptPassword = EncryptionHelper.Encrypt(result.Password);
-            decryptPassword = EncryptionHelper.Decrypt(encryptPassword);
+            decryptPassword = EncryptionHelper.Decrypt(result.Password);
+            Console.WriteLine($"Decrypt pas : {decryptPassword}");
+            Console.WriteLine($"Model pass : {model.Password}");
 
-            //if (PasswordService.VerifyPassword(model.Password, result.Password))
-            //{
-            //    return JwtTokenGenerator.GenerateToken(_context, _configuration, result);
-            //}
-            if (decryptPassword.Equals(result.Password))
+            if (decryptPassword.Equals(model.Password))
             {
                 return JwtTokenGenerator.GenerateToken(_context, _configuration, result);
             }
