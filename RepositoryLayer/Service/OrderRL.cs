@@ -23,42 +23,50 @@ namespace RepositoryLayer.Service
 
         public async Task<string> PlacedOrder(OrderML model, int userId)
         {
-            var cartList = await _context.Carts.Where(c => c.UserId == userId && c.IsPurchased == false).Include(c => c.Book).ToListAsync();
-            OrderEntity newOrder;
-            if (cartList.Any())
-            {
-                foreach(var cart in cartList)
-                {
-                    newOrder = new OrderEntity() 
-                    {
-                        UserId = userId,
-                        CustomerDetailsId = model.CustomerDetailsId,
-                        CartId = cart.Id,
-                        Quantity = cart.Quantity,
-                        TotalPrice = cart.Quantity * cart.Book.DiscountedPrice
-                    };
+            var cartList = await _context.Carts
+                .Where(c => c.UserId == userId && !c.IsPurchased)
+                .Include(c => c.Book)
+                .ToListAsync();
 
-                    await _context.Orders.AddAsync(newOrder);
-                    await _context.SaveChangesAsync();
-
-                    var existingBook = await _context.Books.FindAsync(cart.Book.Id);
-                    existingBook.Quantity = existingBook.Quantity - cart.Quantity;
-
-                    _context.Books.Update(existingBook);
-                    await _context.SaveChangesAsync();
-
-                    cart.IsPurchased = true;
-                    _context.Carts.Update(cart);
-                    await _context.SaveChangesAsync();
-                }
-            }
-            else
+            if (!cartList.Any())
             {
                 throw new OrderException("No items inside cart");
             }
 
+            var newOrders = new List<OrderEntity>();
+            var updatedBooks = new List<BookEntity>();
+            var updatedCarts = new List<CartEntity>();
+
+            foreach (var cart in cartList)
+            {
+                var newOrder = new OrderEntity
+                {
+                    UserId = userId,
+                    CustomerDetailsId = model.CustomerDetailsId,
+                    CartId = cart.Id,
+                    Quantity = cart.Quantity,
+                    TotalPrice = cart.Quantity * cart.Book.DiscountedPrice
+                };
+
+                newOrders.Add(newOrder);
+
+                var existingBook = cart.Book;
+                existingBook.Quantity -= cart.Quantity;
+                updatedBooks.Add(existingBook);
+
+                cart.IsPurchased = true;
+                updatedCarts.Add(cart);
+            }
+
+            await _context.Orders.AddRangeAsync(newOrders);
+            _context.Books.UpdateRange(updatedBooks);
+            _context.Carts.UpdateRange(updatedCarts);
+
+            await _context.SaveChangesAsync();
+
             return $"User Id : {userId} your Order placed successfully";
         }
+
 
 
         public async Task<List<OrderEntity>> GetAllPlacedOrderByUserId(int userId)
