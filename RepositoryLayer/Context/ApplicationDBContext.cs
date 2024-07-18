@@ -16,6 +16,7 @@ namespace RepositoryLayer.Context
         public DbSet<BookEntity> Books { get; set; }
         public DbSet<CustomerDetailsEntity> CustomerDetails { get; set; }
         public DbSet<CartEntity> Carts { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,12 @@ namespace RepositoryLayer.Context
             modelBuilder.Entity<CartEntity>()
                 .HasIndex(c => new { c.BookId, c.UserId })
                 .IsUnique();
+
+            modelBuilder.Entity<OrderEntity>()
+                .HasOne(o => o.User)
+                .WithMany(o => o.Order)
+                .HasForeignKey(o => o.UserId);
+                
         }
     }
 }

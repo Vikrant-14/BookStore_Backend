@@ -49,6 +49,12 @@ builder.Services.AddScoped<ICartBL, CartBL>();
 builder.Services.AddScoped<ICartCommand, CartCommand>();
 builder.Services.AddScoped<ICartQuery, CartQuery>();
 
+//Order
+builder.Services.AddScoped<IOrderRL, OrderRL>();
+builder.Services.AddScoped<IOrderBL, OrderBL>();
+builder.Services.AddScoped<IOrderCommand, OrderCommand>();
+builder.Services.AddScoped<IOrderQuery, OrderQuery>();
+
 //JwtValidation
 builder.Services.AddTransient<JwtValidation>();
 
