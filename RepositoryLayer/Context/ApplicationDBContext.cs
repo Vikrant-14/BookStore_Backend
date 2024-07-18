@@ -30,6 +30,11 @@ namespace RepositoryLayer.Context
                 .WithMany(b => b.Carts)
                 .HasForeignKey(c => c.BookId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // Adding unique constraint on BookId and UserId combination
+            modelBuilder.Entity<CartEntity>()
+                .HasIndex(c => new { c.BookId, c.UserId })
+                .IsUnique();
         }
     }
 }
