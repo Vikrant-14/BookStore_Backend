@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModelLayer;
 using RepositoryLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace RepositoryLayer.Context
         public DbSet<CustomerDetailsEntity> CustomerDetails { get; set; }
         public DbSet<CartEntity> Carts { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<WishlistEntity> Wishlists { get; set; }
+        public DbSet<WishlistWithBookDetailsDto> WishlistWithBookDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,7 +44,26 @@ namespace RepositoryLayer.Context
                 .HasOne(o => o.User)
                 .WithMany(o => o.Order)
                 .HasForeignKey(o => o.UserId);
-                
+
+            modelBuilder.Entity<WishlistEntity>()
+                .HasOne(w => w.User)
+                .WithMany(u => u.Wishlist)
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<WishlistEntity>()
+                .HasOne(w => w.Book)
+                .WithMany(b => b.Wishlist)
+                .HasForeignKey(w => w.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Adding unique constraint on BookId and UserId combination
+            modelBuilder.Entity<WishlistEntity>()
+                .HasIndex(w => new { w.BookId, w.UserId })
+                .IsUnique();
+
+            modelBuilder.Entity<WishlistWithBookDetailsDto>().HasNoKey();
+
         }
     }
 }

@@ -27,5 +27,7 @@ namespace RepositoryLayer.Entity
         public ICollection<CartEntity> Carts { get; set; }
         [JsonIgnore]
         public ICollection<OrderEntity> Order { get; set; }
+        [JsonIgnore]
+        public ICollection<WishlistEntity> Wishlist { get; set; }
     }
 }

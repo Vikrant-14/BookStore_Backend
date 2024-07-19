@@ -55,6 +55,12 @@ builder.Services.AddScoped<IOrderBL, OrderBL>();
 builder.Services.AddScoped<IOrderCommand, OrderCommand>();
 builder.Services.AddScoped<IOrderQuery, OrderQuery>();
 
+//WishList
+builder.Services.AddScoped<IWishlistRL, WishlistRL>();
+builder.Services.AddScoped<IWishlistBL, WishlistBL>();
+builder.Services.AddScoped<IWishlistCommand, WishlistCommand>();
+builder.Services.AddScoped<IWishlistQuery, WishlistQuery>();
+
 //JwtValidation
 builder.Services.AddTransient<JwtValidation>();
 
